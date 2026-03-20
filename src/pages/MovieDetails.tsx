@@ -1,5 +1,5 @@
 import { useMovieDetails } from "@/features/movies/hooks/useMovieDetails";
-import type { Genre } from "@/features/movies/types/movie-details.types";
+import type { Genre } from "@/features/movies/types/movie-details";
 import { useParams } from "react-router-dom";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 

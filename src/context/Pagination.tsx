@@ -24,7 +24,7 @@ export const PaginationProvider = ({ children }: { children: ReactNode }) => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const hasPrev = useMemo(() => page > 1, [page, totalPages]);
+  const hasPrev = useMemo(() => page > 1, [page]);
   const hasNext = useMemo(() => page + 1 <= totalPages, [page, totalPages]);
   const hasEllipsis = useMemo(() => page + 1 < totalPages, [page, totalPages]);
 
@@ -45,6 +45,7 @@ export const PaginationProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePagination = () => {
   const context = useContext(PaginationContext);
   if (!context) {

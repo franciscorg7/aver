@@ -1,18 +1,18 @@
-import { Paginator } from "@/components/Paginator";
-import { useMovieList } from "../hooks/useMovieList";
-import { MovieCard } from "./MovieCard";
 import { usePagination } from "@/context/Pagination";
+import { useSerieList } from "../hooks/useSerieList";
+import { SerieCard } from "./SerieCard";
 import { useEffect } from "react";
+import { Paginator } from "@/components/Paginator";
 
-type MovieListProps = {
-  onMovieClick: (id: string) => void;
+type SerieListProps = {
+  onSerieClick: (id: string) => void;
 };
 
-export const MovieList = ({ onMovieClick }: MovieListProps) => {
+export const SerieList = ({ onSerieClick }: SerieListProps) => {
   const { page, hasPrev, hasNext, hasEllipsis, setPage, setTotalPages } =
     usePagination();
 
-  const { data, isLoading, isError } = useMovieList({
+  const { data, isLoading, isError } = useSerieList({
     filter: "popular",
     page,
   });
@@ -27,15 +27,15 @@ export const MovieList = ({ onMovieClick }: MovieListProps) => {
   }, [data, setTotalPages]);
 
   if (isLoading)
-    return <div className="p-8 text-slate-400">A carregar filmes...</div>;
+    return <div className="p-8 text-slate-400">A carregar séries...</div>;
   if (isError || !data)
-    return <div className="p-8 text-red-400">Erro ao carregar filmes.</div>;
+    return <div className="p-8 text-red-400">Erro ao carregar séries.</div>;
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        {data?.results?.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} onClick={onMovieClick} />
+      <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
+        {data?.results?.map((serie) => (
+          <SerieCard key={serie.id} serie={serie} onClick={onSerieClick} />
         ))}
       </div>
       <Paginator

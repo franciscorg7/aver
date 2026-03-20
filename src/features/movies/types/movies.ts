@@ -14,3 +14,10 @@ export interface Movie {
   video: boolean;
   adult: boolean;
 }
+
+export type MovieListFilters =
+  | "popular"
+  | "top_rated"
+  | "now_playing"
+  | "upcoming"
+  | "trending";
