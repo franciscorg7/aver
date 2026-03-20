@@ -1,12 +1,13 @@
 import { useMovieDetails } from "@/features/movies/hooks/useMovieDetails";
 import type { Genre } from "@/features/movies/types/movie-details.types";
 import { useParams } from "react-router-dom";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 export const MovieDetails = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useMovieDetails(id);
 
-  console.log(data, isLoading, isError);
+  useDocumentTitle(data?.title ?? "Movie Details");
 
   if (isLoading) return <div>Loading...</div>;
   if (isError)

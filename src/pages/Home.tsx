@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "@/routes";
 import { usePagination } from "@/context/Pagination";
 import { useEffect } from "react";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 export const Home = () => {
   const { page, hasPrev, hasNext, hasEllipsis, setPage, setTotalPages } =
@@ -12,10 +13,12 @@ export const Home = () => {
   const { data, isLoading, isError } = usePopularMovies(page);
   const navigate = useNavigate();
 
+  useDocumentTitle("Home");
+
   useEffect(() => {
     if (!data || !data?.total_pages) return;
     setTotalPages(data.total_pages);
-  }, [data?.total_pages, setTotalPages]);
+  }, [data, setTotalPages]);
 
   if (isLoading)
     return <div className="p-8 text-slate-400">A carregar filmes...</div>;
