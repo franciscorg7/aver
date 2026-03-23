@@ -6,16 +6,16 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from '@/components/ui/pagination'
 
 type PaginatorProps = {
-  page: number;
-  totalPages: number;
-  hasPrev: boolean;
-  hasNext: boolean;
-  hasEllipsis: boolean;
-  setPage: (page: number) => void;
-};
+  page: number
+  totalPages: number
+  hasPrev: boolean
+  hasNext: boolean
+  hasEllipsis: boolean
+  setPage: (page: number) => void
+}
 
 export const Paginator = ({
   page,
@@ -26,14 +26,14 @@ export const Paginator = ({
   setPage,
 }: PaginatorProps) => {
   const handlePrevPage = (page: number) => {
-    setPage(Math.max(1, page - 1));
-  };
+    setPage(Math.max(1, page - 1))
+  }
 
   const handleNextPage = (page: number) => {
-    setPage(Math.min(totalPages, page + 1));
-  };
+    setPage(Math.min(totalPages, page + 1))
+  }
 
-  const [prev, cur, next] = [page - 1, page, page + 1];
+  const [prev, cur, next] = [page - 1, page, page + 1]
 
   return (
     <Pagination>
@@ -57,7 +57,7 @@ export const Paginator = ({
                   {page}
                 </PaginationLink>
               </PaginationItem>
-            ),
+            )
         )}
 
         {hasEllipsis && (
@@ -73,5 +73,5 @@ export const Paginator = ({
         )}
       </PaginationContent>
     </Pagination>
-  );
-};
+  )
+}

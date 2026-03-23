@@ -1,19 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
-import { getMoviesByFilter, type MovieListFilter } from "../api/movies.api";
+import { useQuery } from '@tanstack/react-query'
+import { getMoviesByFilter, type MovieListFilter } from '../api/movie-lists.api'
 
 type UseMovieListProps = {
-  filter?: MovieListFilter;
-  page?: number;
-};
+  filter?: MovieListFilter
+  page?: number
+}
 
 export const useMovieList = ({
-  filter = "popular",
+  filter = 'POPULAR',
   page = 1,
-}: UseMovieListProps = {}) => {
+}: UseMovieListProps) => {
   return useQuery({
-    queryKey: ["movies", filter, page],
+    queryKey: ['movies', filter, page],
     queryFn: async () => {
-      return getMoviesByFilter(filter, page);
+      return getMoviesByFilter(filter, page)
     },
-  });
-};
+  })
+}

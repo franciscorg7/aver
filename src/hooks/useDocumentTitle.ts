@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
-const DEFAULT_TITLE = "aver";
+const DEFAULT_TITLE = 'aver'
 
 /**
  * Sets the document title to the given title, prefixed by the default title.
@@ -9,10 +9,10 @@ const DEFAULT_TITLE = "aver";
  */
 export const useDocumentTitle = (title?: string) => {
   useEffect(() => {
-    document.title = title ? `${DEFAULT_TITLE} | ${title}` : DEFAULT_TITLE;
+    document.title = title ? `${DEFAULT_TITLE} | ${title}` : DEFAULT_TITLE
 
     return () => {
-      document.title = DEFAULT_TITLE;
-    };
-  }, [title]);
-};
+      document.title = DEFAULT_TITLE
+    }
+  }, [title])
+}

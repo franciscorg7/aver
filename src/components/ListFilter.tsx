@@ -1,11 +1,12 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import type { ListFilterOption } from '@/types/list-filters'
 
-type ListFilterProps<T> = {
-  currentFilter?: T;
-  filters: T[];
-  content: React.ReactNode[];
-  onFilterChange: (filter: T) => void;
-};
+type ListFilterProps<T extends string> = {
+  currentFilter?: T
+  filters: Array<ListFilterOption & { id: T }>
+  content: React.ReactNode[]
+  onFilterChange: (filter: T) => void
+}
 
 export function ListFilter<T extends string>({
   currentFilter,
@@ -13,24 +14,33 @@ export function ListFilter<T extends string>({
   content,
   onFilterChange,
 }: ListFilterProps<T>) {
-  const defaultFilter = currentFilter || filters[0];
+  const selectedFilter = currentFilter ?? filters[0]?.id
+
   return (
     <Tabs
-      defaultValue={defaultFilter}
+      value={selectedFilter}
       onValueChange={(value) => onFilterChange(value as T)}
     >
       <TabsList>
         {filters.map((filter) => (
-          <TabsTrigger className="cursor-pointer" key={filter} value={filter}>
-            {filter}
+          <TabsTrigger
+            className="cursor-pointer"
+            key={filter.id}
+            value={filter.id}
+          >
+            {filter.label}
           </TabsTrigger>
         ))}
       </TabsList>
+
       {content.map((item, index) => (
-        <TabsContent key={index} value={filters[index]}>
+        <TabsContent
+          key={filters[index]?.id ?? index}
+          value={filters[index].id}
+        >
           {item}
         </TabsContent>
       ))}
     </Tabs>
-  );
+  )
 }

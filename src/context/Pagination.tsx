@@ -4,29 +4,29 @@ import {
   useMemo,
   useState,
   type ReactNode,
-} from "react";
+} from 'react'
 
 type PaginationContextType = {
-  page: number;
-  setPage: (page: number) => void;
-  totalPages: number;
-  setTotalPages: (total: number) => void;
-  hasNext: boolean;
-  hasPrev: boolean;
-  hasEllipsis: boolean;
-};
+  page: number
+  setPage: (page: number) => void
+  totalPages: number
+  setTotalPages: (total: number) => void
+  hasNext: boolean
+  hasPrev: boolean
+  hasEllipsis: boolean
+}
 
 const PaginationContext = createContext<PaginationContextType | undefined>(
-  undefined,
-);
+  undefined
+)
 
 export const PaginationProvider = ({ children }: { children: ReactNode }) => {
-  const [page, setPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
+  const [page, setPage] = useState<number>(1)
+  const [totalPages, setTotalPages] = useState<number>(1)
 
-  const hasPrev = useMemo(() => page > 1, [page]);
-  const hasNext = useMemo(() => page + 1 <= totalPages, [page, totalPages]);
-  const hasEllipsis = useMemo(() => page + 1 < totalPages, [page, totalPages]);
+  const hasPrev = useMemo(() => page > 1, [page])
+  const hasNext = useMemo(() => page + 1 <= totalPages, [page, totalPages])
+  const hasEllipsis = useMemo(() => page + 1 < totalPages, [page, totalPages])
 
   return (
     <PaginationContext.Provider
@@ -42,14 +42,14 @@ export const PaginationProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </PaginationContext.Provider>
-  );
-};
+  )
+}
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const usePagination = () => {
-  const context = useContext(PaginationContext);
+  const context = useContext(PaginationContext)
   if (!context) {
-    throw new Error("usePagination must be used within a PaginationProvider");
+    throw new Error('usePagination must be used within a PaginationProvider')
   }
-  return context;
-};
+  return context
+}

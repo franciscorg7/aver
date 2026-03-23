@@ -1,59 +1,63 @@
-import { useMovieDetails } from "@/features/movies/hooks/useMovieDetails";
-import type { Genre } from "@/features/movies/types/movie-details";
-import { useParams } from "react-router-dom";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useMovieDetails } from '@/features/movies/hooks/useMovieDetails'
+import type { Genre } from '@/features/movies/types/movie-details'
+import { useParams } from 'react-router-dom'
+import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 
 export const MovieDetails = () => {
-  const { id } = useParams();
-  const { data, isLoading, isError } = useMovieDetails(id);
+  const { id } = useParams()
+  const { data, isLoading, isError } = useMovieDetails(id)
 
-  useDocumentTitle(data?.title ?? "Movie Details");
+  useDocumentTitle(data?.title ?? 'Movie Details')
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>
   if (isError)
-    return (
-      <div className="p-8 text-red-400">Could not load movie details.</div>
-    );
+    return <div className="p-8 text-red-400">Could not load movie details.</div>
 
   return (
-    <div style={{ maxWidth: 480, margin: "0 auto", padding: 24 }}>
+    <div style={{ maxWidth: 480, margin: '0 auto', padding: 24 }}>
       {data.poster_path && (
         <img
           src={`https://image.tmdb.org/t/p/w342${data.poster_path}`}
           alt={data.title}
-          style={{ width: "100%", borderRadius: 8, marginBottom: 20 }}
+          style={{ width: '100%', borderRadius: 8, marginBottom: 20 }}
         />
       )}
 
-      <h1 style={{ margin: "16px 0 4px" }}>{data.title}</h1>
+      <h1 style={{ margin: '16px 0 4px' }}>{data.title}</h1>
       {data.tagline && (
-        <div style={{ color: "#888", fontStyle: "italic", marginBottom: 12 }}>
+        <div
+          style={{
+            color: '#888',
+            fontStyle: 'italic',
+            marginBottom: 12,
+          }}
+        >
           {data.tagline}
         </div>
       )}
 
       <div style={{ marginBottom: 8 }}>
         <strong>Release:</strong> {data.release_date}
-        {" · "}
-        <strong>Rating:</strong> {data.vote_average?.toFixed(1) ?? "-"} / 10
-        {" · "}
+        {' · '}
+        <strong>Rating:</strong> {data.vote_average?.toFixed(1) ?? '-'} / 10
+        {' · '}
         <strong>Votes:</strong> {data.vote_count}
       </div>
 
       {data.genres.length ? (
-        <div style={{ marginBottom: 8, color: "#666", fontSize: 14 }}>
-          {(data.genres as Genre[]).map((g) => g.name).join(", ")}
+        <div style={{ marginBottom: 8, color: '#666', fontSize: 14 }}>
+          {(data.genres as Genre[]).map((g) => g.name).join(', ')}
         </div>
       ) : null}
 
-      <p style={{ margin: "16px 0" }}>{data.overview}</p>
+      <p style={{ margin: '16px 0' }}>{data.overview}</p>
 
-      <div style={{ fontSize: 13, color: "#888" }}>
+      <div style={{ fontSize: 13, color: '#888' }}>
         <div>
           <strong>Original Title:</strong> {data.original_title}
         </div>
         <div>
-          <strong>Original Language:</strong>{" "}
+          <strong>Original Language:</strong>{' '}
           {data.original_language?.toUpperCase()}
         </div>
         {data.runtime && (
@@ -83,5 +87,5 @@ export const MovieDetails = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}

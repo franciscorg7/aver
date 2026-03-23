@@ -1,22 +1,22 @@
 export interface Serie {
-  adult: boolean;
-  backdrop_path: string | null;
-  first_air_date: string;
-  genre_ids: number[];
-  id: number;
-  name: string;
-  origin_country: string[];
-  original_language: string;
-  original_name: string;
-  overview: string;
-  popularity: number;
-  poster_path: string | null;
-  vote_average: number;
-  vote_count: number;
+  adult: boolean
+  backdrop_path: string | null
+  first_air_date: string
+  genre_ids: number[]
+  id: number
+  name: string
+  origin_country: string[]
+  original_language: string
+  original_name: string
+  overview: string
+  popularity: number
+  poster_path: string | null
+  vote_average: number
+  vote_count: number
 }
 
 export type SeriesListFilter =
-  | "airing_today"
-  | "on_the_air"
-  | "popular"
-  | "top_rated";
+  | 'airing_today'
+  | 'on_the_air'
+  | 'popular'
+  | 'top_rated'

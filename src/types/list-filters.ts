@@ -1,1 +1,6 @@
-export type ListFilter = "movies" | "tv-series";
+export type ListFilter = 'movies' | 'series'
+
+export interface ListFilterOption {
+  id: ListFilter
+  label: string
+}

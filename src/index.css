@@ -1,6 +1,18 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
+  --color-yellow-50: #faf7e9;
+  --color-yellow-100: #f2ebc6;
+  --color-yellow-200: #e6d792;
+  --color-yellow-300: #d9c15e;
+  --color-yellow-400: #ccab2d;
+  --color-yellow-500: #d4af37;
+  --color-yellow-600: #b3912b;
+  --color-yellow-700: #8f7222;
+  --color-yellow-800: #6b541a;
+  --color-yellow-900: #4a3a12;
+  --color-yellow-950: #291f08;
+
   --color-navy-900: #0f172a;
   --color-navy-800: #1e293b;
 
@@ -12,6 +24,6 @@
 @layer base {
   body {
     @apply bg-navy-900 text-slate-50 antialiased;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 }
