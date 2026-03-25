@@ -1,73 +1,77 @@
-# React + TypeScript + Vite
+# Aver
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aver is a movie and series discovery app built with React, TypeScript and Vite. It makes use of the TMDB API to let users browse titles, search by query and explore detailed pages with supporting information like cast and similar recommendations.
 
-Currently, two official plugins are available:
+The project is being built feature by feature. Right now the core experience is focused on discovery and browsing and the next planned steps are user-facing features such as ratings, watchlists, and other personalized actions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Browse movies from curated TMDB lists
+- Search movies with debounced requests
+- View movie details, cast, and similar movies
+- Explore a home page with featured content
+- Fetch remote data with React Query
+- Navigate between pages with React Router
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Roadmap
 
-## Expanding the ESLint configuration
+- Search and browse series in the main UI
+- Rate movies and series
+- Save titles to a personal watchlist
+- Track watched items
+- Add persistent user preferences and account-based features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React 19
+- TypeScript
+- Vite
+- React Router
+- TanStack Query
+- Axios
+- Tailwind CSS
+- ESLint
+- Prettier
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Install dependencies
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Configure environment variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the project root and add your TMDB API key:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_TMDB_API_KEY=your_tmdb_api_key
 ```
+
+You can generate an API key from [The Movie Database](https://www.themoviedb.org/).
+
+### 3. Start the development server
+
+```bash
+npm run dev
+```
+
+## Available Scripts
+
+- `npm run dev` starts the Vite development server
+- `npm run build` runs TypeScript build checks and creates a production build
+- `npm run lint` runs ESLint with zero warnings allowed
+- `npm run lint:fix` automatically fixes lint issues when possible
+- `npm run format` formats the project with Prettier
+- `npm run preview` previews the production build locally
+
+## Current Status
+
+Movie discovery is the most complete part of the app today. Series support exists in the codebase at the API and feature level, but the UI flow is still evolving and not yet documented here as a fully finished experience.
+
+## Notes
+
+- The app depends on TMDB data availability and API limits.
+- Some future features in the roadmap will likely require local persistence or backend support.
+
