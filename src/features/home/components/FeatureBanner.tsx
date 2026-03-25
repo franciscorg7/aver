@@ -1,23 +1,26 @@
 import { Rating } from '@/components/Rating'
 
-type HeroBannerProps = {
+type FeatureBannerProps = {
   title?: string
   description?: string
   bgImage?: string
   rating?: number
   type: 'movie' | 'series'
+  onViewDetails?: () => void
 }
 
-export const HeroBanner = ({
+export const FeatureBanner = ({
   title,
   description,
   bgImage = '',
   rating = 0.0,
   type,
-}: HeroBannerProps) => {
+  onViewDetails,
+}: FeatureBannerProps) => {
   const handleAddToList = () => {
     console.log(type, rating)
   }
+
   return (
     <div
       className="relative flex h-[80vh] w-full items-end overflow-hidden bg-cover bg-no-repeat"
@@ -37,6 +40,7 @@ export const HeroBanner = ({
         <div className="flex gap-4">
           <button>Watch Trailer</button>
           <button onClick={() => handleAddToList()}>Add to List</button>
+          <button onClick={onViewDetails}>View Details</button>
         </div>
       </div>
     </div>

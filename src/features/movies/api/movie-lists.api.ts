@@ -21,6 +21,11 @@ export interface TMDBMovieListResponse<T> {
   total_results: number
 }
 
+export interface MovieSearchParams {
+  page?: number
+  query: string
+}
+
 export const getMoviesByFilter = async (
   filter: MovieListFilter,
   page: number
@@ -45,5 +50,26 @@ export const getMoviesByFilter = async (
   } catch (error) {
     console.error(`[MoviesAPI] Failed to fetch ${filter} movies:`, error)
     throw new Error(`[MoviesAPI] Failed to fetch ${filter} movies`)
+  }
+}
+
+export const searchMovies = async ({
+  page = 1,
+  query,
+}: MovieSearchParams): Promise<TMDBMovieListResponse<Movie>> => {
+  try {
+    const { data } = await api.get('/search/movie', {
+      params: { page, query },
+    })
+
+    if (!data || !Array.isArray(data.results))
+      throw new Error(
+        '[MoviesAPI] Unexpected API response structure for movie search.'
+      )
+
+    return data
+  } catch (error) {
+    console.error('[MoviesAPI] Failed to search movies:', error)
+    throw new Error('[MoviesAPI] Failed to search movies')
   }
 }

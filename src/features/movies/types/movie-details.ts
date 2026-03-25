@@ -36,6 +36,20 @@ export type MovieStatus =
   | 'Released'
   | 'Canceled'
 
+export interface MovieCastMember {
+  id: number
+  name: string
+  character: string
+  profile_path: string | null
+}
+
+export interface SimilarMovie {
+  id: number
+  title: string
+  poster_path: string | null
+  release_date: string
+}
+
 export interface MovieDetails {
   adult: boolean
   backdrop_path: string | null
@@ -63,4 +77,9 @@ export interface MovieDetails {
   video: boolean
   vote_average: number
   vote_count: number
+}
+
+export interface MovieDetailsWithExtras extends MovieDetails {
+  cast: MovieCastMember[]
+  similarMovies: SimilarMovie[]
 }

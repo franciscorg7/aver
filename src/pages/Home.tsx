@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
-import { HeroBanner } from '@/features/home/components/HeroBanner'
-import { NowPlaying } from '@/features/home/components/NowPlaying'
+import { NowPlaying } from '@/features/home/components/Trending'
 import { useMovieList } from '@/features/movies/hooks/useMovieList'
 import { APP_ROUTES } from '@/routes'
+import { FeatureBanner } from '@/features/home/components/FeatureBanner'
 
 export const Home = () => {
   useDocumentTitle('Home')
@@ -16,10 +16,11 @@ export const Home = () => {
   })
 
   const handleMovieClick = (id: string) => {
-    navigate(APP_ROUTES.MOVIE_DETAILS.replace(':id', id))
+    navigate(APP_ROUTES.MOVIE_DETAILS.replace(':id', id.toString()))
   }
 
   const {
+    id,
     title,
     overview: description,
     poster_path: bgImage,
@@ -28,13 +29,16 @@ export const Home = () => {
 
   return (
     <div className="bg-navy-900 min-h-screen w-full">
-      <HeroBanner
-        title={title}
-        description={description}
-        bgImage={bgImage ?? ''}
-        rating={rating}
-        type="movie"
-      />
+      {id && (
+        <FeatureBanner
+          title={title}
+          description={description}
+          bgImage={bgImage ?? ''}
+          rating={rating}
+          type="movie"
+          onViewDetails={() => handleMovieClick(id.toString())}
+        />
+      )}
       {!isLoading && !error && data?.results?.length ? (
         <NowPlaying
           title="Trending Now"

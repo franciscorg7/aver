@@ -1,4 +1,4 @@
-import type { Movie } from '../types/movies'
+import type { Movie } from '../../types/movies'
 
 type MovieCardProps = {
   movie: Movie

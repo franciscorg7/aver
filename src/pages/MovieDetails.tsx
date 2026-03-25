@@ -1,90 +1,76 @@
 import { useMovieDetails } from '@/features/movies/hooks/useMovieDetails'
-import type { Genre } from '@/features/movies/types/movie-details'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
+import { MovieHeroBanner } from '@/features/movies/components/movie-details/MovieHeroBanner'
+import { Synopsis } from '@/features/movies/components/movie-details/Synopsis'
+import { Cast } from '@/features/movies/components/movie-details/Cast'
+import { SimilarMovies } from '@/features/movies/components/movie-details/SimilarMovies'
+import { getYearFromDate } from '@/lib/date-utils'
+import type { Genre } from '@/features/movies/types/movie-details'
+
+/**
+ * Gets the year from the release date.
+ *
+ * @param dateString - the full string date
+ * @returns only the release year or N/A if null
+ */
+const getReleaseYear = (dateString: string | null) => {
+  const year = getYearFromDate(dateString)
+  return year ? year.toString() : 'N/A'
+}
+
+/**
+ * Safely returns an empty path if the backdrop path is null.
+ *
+ * @param path - the url path for the backdrop
+ * @returns the original path or empty string
+ */
+const getBackdropUrl = (path: string | null) =>
+  path ? `https://image.tmdb.org/t/p/original${path}` : ''
+
+/**
+ * Get the genre names from the genre objects.
+ *
+ * @param genres - the movie genres
+ * @returns an array of genre names or an empty array if undefined
+ */
+const getGenres = (genres: Genre[] | undefined) => {
+  return genres ? genres.map((genre) => genre.name) : []
+}
 
 export const MovieDetails = () => {
   const { id } = useParams()
   const { data, isLoading, isError } = useMovieDetails(id)
+  const navigate = useNavigate()
 
   useDocumentTitle(data?.title ?? 'Movie Details')
+
+  const handleMovieClick = (movieId: number) => {
+    navigate(`/movies/${movieId}`)
+  }
 
   if (isLoading) return <div>Loading...</div>
   if (isError)
     return <div className="p-8 text-red-400">Could not load movie details.</div>
+  if (!data) return null
 
   return (
-    <div style={{ maxWidth: 480, margin: '0 auto', padding: 24 }}>
-      {data.poster_path && (
-        <img
-          src={`https://image.tmdb.org/t/p/w342${data.poster_path}`}
-          alt={data.title}
-          style={{ width: '100%', borderRadius: 8, marginBottom: 20 }}
+    <div className="bg-navy-900 min-h-screen w-full">
+      <MovieHeroBanner
+        title={data.title}
+        rating={data.vote_average}
+        genres={getGenres(data.genres)}
+        year={getReleaseYear(data.release_date)}
+        bgImage={getBackdropUrl(data.backdrop_path)}
+        type="movie"
+      />
+      <div className="flex flex-col gap-24 px-12 py-8">
+        <Synopsis overview={data.overview}></Synopsis>
+        <Cast cast={data.cast} />
+        <SimilarMovies
+          movies={data.similarMovies}
+          onMovieClick={handleMovieClick}
         />
-      )}
-
-      <h1 style={{ margin: '16px 0 4px' }}>{data.title}</h1>
-      {data.tagline && (
-        <div
-          style={{
-            color: '#888',
-            fontStyle: 'italic',
-            marginBottom: 12,
-          }}
-        >
-          {data.tagline}
-        </div>
-      )}
-
-      <div style={{ marginBottom: 8 }}>
-        <strong>Release:</strong> {data.release_date}
-        {' · '}
-        <strong>Rating:</strong> {data.vote_average?.toFixed(1) ?? '-'} / 10
-        {' · '}
-        <strong>Votes:</strong> {data.vote_count}
-      </div>
-
-      {data.genres.length ? (
-        <div style={{ marginBottom: 8, color: '#666', fontSize: 14 }}>
-          {(data.genres as Genre[]).map((g) => g.name).join(', ')}
-        </div>
-      ) : null}
-
-      <p style={{ margin: '16px 0' }}>{data.overview}</p>
-
-      <div style={{ fontSize: 13, color: '#888' }}>
-        <div>
-          <strong>Original Title:</strong> {data.original_title}
-        </div>
-        <div>
-          <strong>Original Language:</strong>{' '}
-          {data.original_language?.toUpperCase()}
-        </div>
-        {data.runtime && (
-          <div>
-            <strong>Runtime:</strong> ~{data.runtime} min
-          </div>
-        )}
-        <div>
-          <strong>Status:</strong> {data.status}
-        </div>
-        {data.budget > 0 && (
-          <div>
-            <strong>Budget:</strong> ${data.budget.toLocaleString()}
-          </div>
-        )}
-        {data.revenue > 0 && (
-          <div>
-            <strong>Revenue:</strong> ${data.revenue.toLocaleString()}
-          </div>
-        )}
-        {data.homepage && (
-          <div>
-            <a href={data.homepage} target="_blank" rel="noopener noreferrer">
-              Official Site
-            </a>
-          </div>
-        )}
       </div>
     </div>
   )

@@ -26,20 +26,37 @@ export const Navbar = () => {
     ? 'movies'
     : selectedTab
 
+  /**
+   * Handle tab changes by updating the selected tab state
+   * and navigating to the corresponding route.
+   *
+   * @param value - the value of the selected tab.
+   */
   const handleTabChange = (value: string) => {
     const nextTab = value as NavTab
     setSelectedTab(nextTab)
 
     const matchedItem = navItems.find((item) => item.value === nextTab)
-    if (matchedItem?.route) {
-      console.log(`Navigating to ${matchedItem.route}`)
-      navigate(matchedItem.route)
-    }
+    if (!matchedItem?.route) return
+    navigate(matchedItem.route)
+  }
+
+  /**
+   * Handle clicking the logo to navigate home.
+   */
+  const navigateHome = () => {
+    setSelectedTab('home')
+    navigate(APP_ROUTES.HOME)
   }
 
   return (
     <nav className="fixed top-0 z-50 flex w-full items-center justify-between bg-linear-to-b from-black/80 via-black/40 to-transparent px-8 py-4 backdrop-blur-md">
-      <h1 className="text-3xl font-bold tracking-tighter text-white">AVER</h1>
+      <h1
+        className="cursor-pointer text-3xl font-bold tracking-tighter text-white"
+        onClick={navigateHome}
+      >
+        AVER
+      </h1>
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList className="h-auto rounded-full border border-white/10 bg-black/20 p-1 shadow-none backdrop-blur-xl">
           {navItems.map((item) => (

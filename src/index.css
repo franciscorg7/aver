@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
 @import 'tailwindcss';
 
 @theme {
+  --font-sans: 'Manrope', sans-serif;
+  --font-title: 'Outfit', sans-serif;
+
   --color-yellow-50: #faf7e9;
   --color-yellow-100: #f2ebc6;
   --color-yellow-200: #e6d792;
@@ -23,7 +27,6 @@
 
 @layer base {
   body {
-    @apply bg-navy-900 text-slate-50 antialiased;
-    font-family: 'Inter', sans-serif;
+    @apply bg-navy-900 font-sans text-slate-50 antialiased;
   }
 }
