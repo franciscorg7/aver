@@ -7,12 +7,12 @@ export const AuthInfoContent = () => {
       <AuthMode
         title="TMDB account"
         description="Personalize your experience. You can sync favorites, track your watchlists and manage your ratings permanently."
-        icon={<UserCircle />}
+        icon={UserCircle}
       />
       <AuthMode
         title="Guest session"
         description="Quick and anonymous. Lets you try the app instantly and rate movies without needing a profile."
-        icon={<ClockFading />}
+        icon={ClockFading}
       />
     </div>
   )

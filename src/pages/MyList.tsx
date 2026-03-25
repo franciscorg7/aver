@@ -8,7 +8,7 @@ export const MyList = () => {
   const location = useLocation()
   const { authSession, isAuthenticated, isGuest, isUser } = useAuth()
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated)
     return (
       <Navigate
         to={APP_ROUTES.LOGIN}
@@ -16,11 +16,10 @@ export const MyList = () => {
         state={{ from: { pathname: location.pathname } }}
       />
     )
-  }
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,_rgba(2,6,23,0.92)_0%,_rgba(15,23,42,0.96)_100%)] px-6 py-28 text-slate-50">
-      <section className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl lg:p-10">
+    <main className="min-h-screen bg-[linear-gradient(180deg,rgba(2,6,23,0.92)_0%,rgba(15,23,42,0.96)_100%)] px-6 py-28 text-slate-50">
+      <section className="mx-auto max-w-4xl rounded-4xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl lg:p-10">
         <span className="inline-flex rounded-full border border-yellow-400/30 bg-yellow-400/10 px-3 py-1 text-xs font-semibold tracking-[0.24em] text-yellow-200 uppercase">
           {isUser ? 'TMDB account' : 'Guest session'}
         </span>

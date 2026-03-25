@@ -25,8 +25,26 @@
   --color-slate-700: #334155;
 }
 
+@keyframes nav-icon-swap {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @layer base {
   body {
     @apply bg-navy-900 font-sans text-slate-50 antialiased;
+  }
+}
+
+@layer utilities {
+  .animate-nav-icon-swap {
+    animation: nav-icon-swap 220ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 }

@@ -1,48 +1,43 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   Bookmark,
   Clapperboard,
   Home,
-  LogOut,
+  type LucideIcon,
   Tv,
-  UserRound,
+  User,
 } from 'lucide-react'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/useAuth'
 import { APP_ROUTES } from '@/routes'
+import type { NavItem, NavTab } from '@/types/navigation'
+import { Logo } from './Logo'
+import { Account } from './Account'
 
-type NavTab = 'home' | 'movies' | 'series' | 'my-list' | 'none'
-
-const navItems: Array<{
-  value: NavTab
-  label: string
-  route?: string
-  icon?: React.ReactNode
-}> = [
+const navItems: NavItem[] = [
   {
     value: 'home',
     label: 'Home',
-    icon: <Home />,
+    icon: Home,
     route: APP_ROUTES.HOME,
   },
   {
     value: 'movies',
     label: 'Movies',
-    icon: <Clapperboard />,
+    icon: Clapperboard,
     route: APP_ROUTES.MOVIE_LIST,
   },
   {
     value: 'series',
     label: 'Series',
-    icon: <Tv />,
+    icon: Tv,
     route: APP_ROUTES.SERIES_LIST,
   },
   {
     value: 'my-list',
     label: 'My List',
-    icon: <Bookmark />,
+    icon: Bookmark,
     route: APP_ROUTES.MY_LIST,
   },
 ]
@@ -66,8 +61,6 @@ export const Navbar = () => {
   const { pathname } = useLocation()
   const { authSession, isAuthenticated, isGuest, logout } = useAuth()
 
-  const selectedTab = getActiveTab(pathname)
-
   /**
    * Handle tab changes by updating the selected tab state
    * and navigating to the corresponding route.
@@ -89,25 +82,28 @@ export const Navbar = () => {
     void navigate(APP_ROUTES.HOME)
   }
 
-  const getCurrentTabIcon = () => {
+  /**
+   * Maps the current pathname to the corresponding tab icon.
+   * Defaults to the Clapperboard icon if no match is found.
+   *
+   * @returns the current tab icon
+   */
+  const getCurrentTabIcon = (): LucideIcon => {
     const currentItem = navItems.find((item) => item.value === selectedTab)
-    return currentItem?.icon || <Clapperboard />
+    if (!currentItem && pathname.startsWith(APP_ROUTES.LOGIN)) return User
+    return currentItem?.icon ?? Clapperboard
   }
+
+  const selectedTab = getActiveTab(pathname)
+  const currentTabIcon = getCurrentTabIcon()
 
   return (
     <nav className="fixed top-0 z-50 flex w-full items-center justify-between bg-linear-to-b from-black/80 via-black/40 to-transparent px-8 py-4 backdrop-blur-md">
-      <div className="flex items-center gap-2">
-        <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-yellow-500/15 text-yellow-300">
-          {getCurrentTabIcon()}
-        </div>
-        <h1
-          className="cursor-pointer text-3xl font-bold tracking-tighter text-white"
-          onClick={navigateHome}
-        >
-          AVER
-        </h1>
-      </div>
-
+      <Logo
+        selectedTab={selectedTab}
+        currentTabIcon={currentTabIcon}
+        navigateHome={navigateHome}
+      />
       <Tabs value={selectedTab} onValueChange={handleTabChange}>
         <TabsList className="h-auto rounded-full border border-white/10 bg-black/20 p-1 shadow-none backdrop-blur-xl">
           {navItems.map((item) => (
@@ -121,37 +117,13 @@ export const Navbar = () => {
           ))}
         </TabsList>
       </Tabs>
-      <div className="flex items-center gap-3">
-        {isAuthenticated ? (
-          <>
-            <Link
-              to={APP_ROUTES.MY_LIST}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white transition hover:bg-white/10"
-            >
-              <UserRound className="h-4 w-4" />
-              {isGuest
-                ? 'Guest'
-                : authSession?.account?.name || authSession?.account?.username}
-            </Link>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={logout}
-              className="rounded-full text-white/80 hover:bg-white/10 hover:text-white"
-              aria-label="Log out"
-            >
-              <LogOut className="h-4 w-4" />
-            </Button>
-          </>
-        ) : (
-          <Button
-            asChild
-            className="text-navy-900 rounded-full bg-yellow-500 px-5 text-sm font-semibold hover:bg-yellow-400"
-          >
-            <Link to={APP_ROUTES.LOGIN}>Sign in</Link>
-          </Button>
-        )}
-      </div>
+      <Account
+        isAuthenticated={isAuthenticated}
+        isGuest={isGuest}
+        authSession={authSession}
+        logout={logout}
+        isHidden={pathname.startsWith(APP_ROUTES.LOGIN)}
+      />
     </nav>
   )
 }
