@@ -16,7 +16,7 @@ export const Home = () => {
   })
 
   const handleMovieClick = (id: string) => {
-    navigate(APP_ROUTES.MOVIE_DETAILS.replace(':id', id.toString()))
+    void navigate(APP_ROUTES.MOVIE_DETAILS.replace(':id', id.toString()))
   }
 
   const {

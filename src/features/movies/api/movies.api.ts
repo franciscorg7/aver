@@ -18,6 +18,42 @@ export const MOVIES_ENDPOINTS = {
   SIMILAR: (id: number | string) => `/movie/${id}/similar`,
 } as const
 
+/**
+ * Builds a list of cast members for a movie, limiting to the first 10 members.
+ *
+ * @param cast - the list of movie cast members
+ * @returns the first 10 cast members or an empty array if none is available
+ */
+const buildMovieCast = (
+  cast: MovieCastMember[] | undefined
+): MovieCastMember[] => {
+  return Array.isArray(cast)
+    ? cast.slice(0, 10).map((member: MovieCastMember) => ({
+        id: member.id,
+        name: member.name,
+        character: member.character,
+        profile_path: member.profile_path,
+      }))
+    : []
+}
+
+/**
+ * Builds a list of similar movies, limiting to the first 8 results.
+ *
+ * @param movies - the similar movies
+ * @returns the first 8 similar movies or an empty array if none is available
+ */
+const buildSimilarMovies = (movies: Movie[] | undefined): SimilarMovie[] => {
+  return Array.isArray(movies)
+    ? movies.slice(0, 8).map((movie: Movie) => ({
+        id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+        release_date: movie.release_date,
+      }))
+    : []
+}
+
 export const getMovieDetails = async (id: string | undefined) => {
   try {
     if (!id) throw new Error('[MoviesAPI] No movie id was provided.')
@@ -38,23 +74,8 @@ export const getMovieDetails = async (id: string | undefined) => {
         '[MoviesAPI] Unexpected API response structure for movie details.'
       )
 
-    const cast: MovieCastMember[] = Array.isArray(credits?.cast)
-      ? credits.cast.slice(0, 10).map((member: MovieCastMember) => ({
-          id: member.id,
-          name: member.name,
-          character: member.character,
-          profile_path: member.profile_path,
-        }))
-      : []
-
-    const similarMovies: SimilarMovie[] = Array.isArray(similar?.results)
-      ? similar.results.slice(0, 8).map((movie: Movie) => ({
-          id: movie.id,
-          title: movie.title,
-          poster_path: movie.poster_path,
-          release_date: movie.release_date,
-        }))
-      : []
+    const cast = buildMovieCast(credits?.cast)
+    const similarMovies = buildSimilarMovies(similar?.results)
 
     return {
       ...details,

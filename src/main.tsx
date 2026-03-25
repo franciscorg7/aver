@@ -4,7 +4,8 @@ import './index.css'
 import App from './App.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
-import { PaginationProvider } from './context/Pagination.tsx'
+import { PaginationProvider } from './context/PaginationContext.tsx'
+import { AuthProvider } from './context/AuthContext.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,11 +19,13 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <PaginationProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PaginationProvider>
+      <AuthProvider>
+        <PaginationProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PaginationProvider>
+      </AuthProvider>
     </QueryClientProvider>
   </StrictMode>
 )

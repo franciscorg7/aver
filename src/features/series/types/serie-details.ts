@@ -64,15 +64,15 @@ export interface SpokenLanguage {
   name: string
 }
 
-export type SerieStatus =
-  | 'Returning Series'
+export type SeriesStatus =
+  | 'Returning Serie'
   | 'Planned'
   | 'In Production'
   | 'Ended'
   | 'Canceled'
   | 'Pilot'
 
-export interface SerieDetails {
+export interface SeriesDetails {
   adult: boolean
   backdrop_path: string | null
   created_by: CreatedBy[]
@@ -99,7 +99,7 @@ export interface SerieDetails {
   production_countries: ProductionCountry[]
   seasons: Season[]
   spoken_languages: SpokenLanguage[]
-  status: SerieStatus
+  status: SeriesStatus
   tagline: string | null
   type: string
   vote_average: number

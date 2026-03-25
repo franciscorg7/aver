@@ -1,30 +1,31 @@
-import { Paginator } from '@/components/Paginator'
-import { ListLoadingScreen } from '@/components/ListLoadingScreen'
 import { useEffect } from 'react'
-import type { Pagination } from '@/types/pagination'
-import type { Movie } from '../../types/movies'
-import { MovieNoResults } from './MovieNoResults'
-import { MovieResults } from './MovieResults'
 
-type MovieListProps = {
-  movies?: Movie[]
+import { ListLoadingScreen } from '@/components/ListLoadingScreen'
+import { Paginator } from '@/components/Paginator'
+import type { Serie } from '../types/series'
+import type { Pagination } from '@/types/pagination'
+import { SeriesNoResults } from './SeriesNoResults'
+import { SeriesResults } from './SeriesResults'
+
+type SeriesListViewProps = {
+  series?: Serie[]
   totalPages?: number
   isLoading?: boolean
   hasError?: boolean
   pagination: Pagination
   searchQuery: string
-  onMovieClick: (id: string) => void
+  onSeriesClick: (id: string) => void
 }
 
-export const MovieListView = ({
-  movies,
+export const SeriesListView = ({
+  series,
   totalPages,
   isLoading,
   hasError,
   pagination,
   searchQuery,
-  onMovieClick,
-}: MovieListProps) => {
+  onSeriesClick,
+}: SeriesListViewProps) => {
   const { page, hasPrev, hasNext, hasEllipsis, goToPage, setTotalPages } =
     pagination
 
@@ -32,17 +33,17 @@ export const MovieListView = ({
     setTotalPages(totalPages || 1)
   }, [totalPages, setTotalPages])
 
-  const noResults = !movies || movies.length === 0 || hasError
-
-  if (isLoading) return <ListLoadingScreen label="movies" />
+  const noResults = !series || series.length === 0 || hasError
+  if (isLoading) return <ListLoadingScreen label="series" />
 
   return (
     <>
       {noResults ? (
-        <MovieNoResults searchQuery={searchQuery} />
+        <SeriesNoResults searchQuery={searchQuery} />
       ) : (
-        <MovieResults movies={movies} onMovieClick={onMovieClick} />
+        <SeriesResults series={series} onSeriesClick={onSeriesClick} />
       )}
+
       <Paginator
         page={page}
         totalPages={totalPages ?? 0}
@@ -50,7 +51,7 @@ export const MovieListView = ({
         hasNext={hasNext}
         hasEllipsis={hasEllipsis}
         setPage={goToPage}
-      ></Paginator>
+      />
     </>
   )
 }

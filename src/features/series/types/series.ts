@@ -15,8 +15,8 @@ export interface Serie {
   vote_count: number
 }
 
-export type SeriesListFilter =
-  | 'airing_today'
-  | 'on_the_air'
-  | 'popular'
-  | 'top_rated'
+export type SerieListFilter =
+  | 'AIRING_TODAY'
+  | 'ON_THE_AIR'
+  | 'POPULAR'
+  | 'TOP_RATED'

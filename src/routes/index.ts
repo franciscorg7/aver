@@ -1,8 +1,10 @@
 export const APP_ROUTES = {
   HOME: '/',
+  LOGIN: '/login',
+  AUTH_CALLBACK: '/auth/callback',
   MOVIE_LIST: '/movies',
   MOVIE_DETAILS: '/movies/:id',
-  TV_SHOWS_LIST: '/tv-shows',
-  TV_SHOW_DETAILS: '/tv-shows/:id',
+  SERIES_LIST: '/series',
+  SERIES_DETAILS: '/series/:id',
   MY_LIST: '/my-list',
 }

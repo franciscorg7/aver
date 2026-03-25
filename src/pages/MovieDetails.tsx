@@ -46,7 +46,7 @@ export const MovieDetails = () => {
   useDocumentTitle(data?.title ?? 'Movie Details')
 
   const handleMovieClick = (movieId: number) => {
-    navigate(`/movies/${movieId}`)
+    void navigate(`/movies/${movieId}`)
   }
 
   if (isLoading) return <div>Loading...</div>

@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { getSeriesDetails } from '../api/series.api'
+import { getSerieDetails } from '../api/series.api'
 
-export const useSerieDetails = (id: string | undefined) => {
+export const useSeriesDetails = (id: string | undefined) => {
   return useQuery({
     queryKey: ['series', 'details', id],
     queryFn: async () => {
-      return getSeriesDetails(id)
+      return getSerieDetails(id)
     },
   })
 }

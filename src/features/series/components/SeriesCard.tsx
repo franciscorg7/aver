@@ -1,11 +1,11 @@
 import type { Serie } from '../types/series'
 
-type SerieCardProps = {
+type SeriesCardProps = {
   serie: Serie
   onClick: (id: string) => void
 }
 
-export const SerieCard = ({ serie, onClick }: SerieCardProps) => {
+export const SeriesCard = ({ serie, onClick }: SeriesCardProps) => {
   return (
     <div
       key={serie.id}

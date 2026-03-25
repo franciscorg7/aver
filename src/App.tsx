@@ -5,6 +5,11 @@ import { APP_ROUTES } from './routes'
 import { MovieDetails } from './pages/MovieDetails'
 import { Navbar } from './components/Navbar'
 import { MovieList } from './pages/MovieList'
+import { SeriesDetails } from './pages/SeriesDetails'
+import { SeriesList } from './pages/SeriesList'
+import { MyList } from './pages/MyList'
+import { Login } from './pages/Login'
+import { AuthCallback } from './pages/AuthCallback'
 
 function App() {
   return (
@@ -12,16 +17,22 @@ function App() {
       <Navbar />
       <Routes>
         <Route path={APP_ROUTES.HOME} element={<Home />}></Route>
+        <Route path={APP_ROUTES.LOGIN} element={<Login />}></Route>
+        <Route
+          path={APP_ROUTES.AUTH_CALLBACK}
+          element={<AuthCallback />}
+        ></Route>
         <Route path={APP_ROUTES.MOVIE_LIST} element={<MovieList />}></Route>
         <Route
           path={APP_ROUTES.MOVIE_DETAILS}
           element={<MovieDetails />}
         ></Route>
-        <Route path={APP_ROUTES.TV_SHOWS_LIST} element={<Home />}></Route>
+        <Route path={APP_ROUTES.SERIES_LIST} element={<SeriesList />}></Route>
         <Route
-          path={APP_ROUTES.TV_SHOW_DETAILS}
-          element={<MovieDetails />}
+          path={APP_ROUTES.SERIES_DETAILS}
+          element={<SeriesDetails />}
         ></Route>
+        <Route path={APP_ROUTES.MY_LIST} element={<MyList />}></Route>
       </Routes>
     </>
   )

@@ -1,8 +1,10 @@
 export type Pagination = {
   page: number
+  totalPages: number
   hasPrev: boolean
   hasNext: boolean
   hasEllipsis: boolean
-  setPage: (page: number) => void
+  goToPage: (page: number) => void
+  resetPage: () => void
   setTotalPages: (totalPages: number) => void
 }

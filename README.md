@@ -1,4 +1,4 @@
-# Aver
+# AVER
 
 Aver is a movie and series discovery app built with React, TypeScript and Vite. It makes use of the TMDB API to let users browse titles, search by query and explore detailed pages with supporting information like cast and similar recommendations.
 
@@ -68,10 +68,9 @@ npm run dev
 
 ## Current Status
 
-Movie discovery is the most complete part of the app today. Series support exists in the codebase at the API and feature level, but the UI flow is still evolving and not yet documented here as a fully finished experience.
+Movie discovery is the most complete part of the app today. Serie support exists in the codebase at the API and feature level, but the UI flow is still evolving and not yet documented here as a fully finished experience.
 
 ## Notes
 
 - The app depends on TMDB data availability and API limits.
 - Some future features in the roadmap will likely require local persistence or backend support.
-

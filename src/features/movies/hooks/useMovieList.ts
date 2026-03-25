@@ -6,15 +6,15 @@ import {
 } from '../api/movie-lists.api'
 
 type UseMovieListProps = {
+  query?: string
   filter?: MovieListFilter
   page?: number
-  query?: string
 }
 
 export const useMovieList = ({
+  query = '',
   filter = 'POPULAR',
   page = 1,
-  query = '',
 }: UseMovieListProps) => {
   const normalizedQuery = query.trim()
 

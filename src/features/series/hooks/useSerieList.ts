@@ -1,19 +1,29 @@
 import { useQuery } from '@tanstack/react-query'
-import { getSeriesByFilter, type SeriesListFilter } from '../api/series.api'
+import {
+  getSerieByFilter,
+  searchSerie,
+  type SerieListFilter,
+} from '../api/series.api'
 
-type UseSerieListProps = {
-  filter?: SeriesListFilter
+type UseSeriesListProps = {
+  query?: string
+  filter?: SerieListFilter
   page?: number
 }
 
-export const useSerieList = ({
-  filter = 'popular',
+export const useSeriesList = ({
+  query = '',
+  filter = 'POPULAR',
   page = 1,
-}: UseSerieListProps = {}) => {
+}: UseSeriesListProps = {}) => {
+  const normalizedQuery = query.trim()
+
   return useQuery({
-    queryKey: ['series', filter, page],
+    queryKey: ['series', filter, page, normalizedQuery],
     queryFn: async () => {
-      return getSeriesByFilter(filter, page)
+      return normalizedQuery
+        ? searchSerie({ page, query: normalizedQuery })
+        : getSerieByFilter(filter, page)
     },
   })
 }
