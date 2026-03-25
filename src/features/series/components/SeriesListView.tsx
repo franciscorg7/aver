@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 
 import { ListLoadingScreen } from '@/components/ListLoadingScreen'
 import { Paginator } from '@/components/Paginator'
-import type { Serie } from '../types/series'
+import type { Series } from '../types/series'
 import type { Pagination } from '@/types/pagination'
 import { SeriesNoResults } from './SeriesNoResults'
 import { SeriesResults } from './SeriesResults'
 
 type SeriesListViewProps = {
-  series?: Serie[]
+  series?: Series[]
   totalPages?: number
   isLoading?: boolean
   hasError?: boolean
@@ -34,7 +34,7 @@ export const SeriesListView = ({
   }, [totalPages, setTotalPages])
 
   const noResults = !series || series.length === 0 || hasError
-  if (isLoading) return <ListLoadingScreen label="series" />
+  if (isLoading) return <ListLoadingScreen />
 
   return (
     <>

@@ -1,8 +1,8 @@
 import { api } from '../../../api/tmdb'
 import type { SeriesDetails } from '../types/serie-details'
-import type { Serie, SerieListFilter } from '../types/series'
+import type { Series, SeriesListFilter } from '../types/series'
 
-export const SERIESS_ENDPOINTS = {
+export const SERIES_ENDPOINTS = {
   AIRING_TODAY: '/tv/airing_today',
   ON_THE_AIR: '/tv/on_the_air',
   TOP_RATED: '/tv/top_rated',
@@ -20,16 +20,16 @@ export interface TMDBPaginatedResponse<T> {
   total_results: number
 }
 
-export interface SerieSearchParams {
+export interface SeriesSearchParams {
   page?: number
   query: string
 }
 
-export const getSerieByFilter = async (
-  filter: SerieListFilter,
+export const getSeriesByFilter = async (
+  filter: SeriesListFilter,
   page: number
-): Promise<TMDBPaginatedResponse<Serie>> => {
-  const endpoint = SERIESS_ENDPOINTS[filter]
+): Promise<TMDBPaginatedResponse<Series>> => {
+  const endpoint = SERIES_ENDPOINTS[filter]
 
   try {
     const { data } = await api.get(endpoint, {
@@ -49,90 +49,90 @@ export const getSerieByFilter = async (
   }
 }
 
-export const searchSerie = async ({
+export const searchSeries = async ({
   page = 1,
   query,
-}: SerieSearchParams): Promise<TMDBPaginatedResponse<Serie>> => {
+}: SeriesSearchParams): Promise<TMDBPaginatedResponse<Series>> => {
   try {
-    const { data } = await api.get(SERIESS_ENDPOINTS.SEARCH, {
+    const { data } = await api.get(SERIES_ENDPOINTS.SEARCH, {
       params: { page, query },
     })
 
     if (!data || !Array.isArray(data.results)) {
       throw new Error(
-        '[SerieAPI] Unexpected API response structure for series search.'
+        '[SeriesAPI] Unexpected API response structure for series search.'
       )
     }
 
     return data
   } catch (error) {
-    console.error('[SerieAPI] Failed to search series:', error)
-    throw new Error('[SerieAPI] Failed to search series')
+    console.error('[SeriesAPI] Failed to search series:', error)
+    throw new Error('[SeriesAPI] Failed to search series')
   }
 }
 
-export const getSerieDetails = async (
+export const getSeriesDetails = async (
   id: string | undefined
 ): Promise<SeriesDetails> => {
   try {
-    if (!id) throw new Error('[SerieAPI] No series id was provided.')
+    if (!id) throw new Error('[SeriesAPI] No series id was provided.')
 
-    const { data } = await api.get(SERIESS_ENDPOINTS.DETAILS(id))
+    const { data } = await api.get(SERIES_ENDPOINTS.DETAILS(id))
 
     if (!data) {
       throw new Error(
-        '[SerieAPI] Unexpected API response structure for series details.'
+        '[SeriesAPI] Unexpected API response structure for series details.'
       )
     }
 
     return data
   } catch (error) {
-    console.error('[SerieAPI] Failed to fetch series details:', error)
-    throw new Error('[SerieAPI] Failed to fetch series details')
+    console.error('[SeriesAPI] Failed to fetch series details:', error)
+    throw new Error('[SeriesAPI] Failed to fetch series details')
   }
 }
 
-export const getSerieCredits = async (id: string | undefined) => {
+export const getSeriesCredits = async (id: string | undefined) => {
   try {
-    if (!id) throw new Error('[SerieAPI] No series id was provided.')
+    if (!id) throw new Error('[SeriesAPI] No series id was provided.')
 
-    const { data } = await api.get(SERIESS_ENDPOINTS.CREDITS(id))
+    const { data } = await api.get(SERIES_ENDPOINTS.CREDITS(id))
 
     if (!data) {
       throw new Error(
-        '[SerieAPI] Unexpected API response structure for series credits.'
+        '[SeriesAPI] Unexpected API response structure for series credits.'
       )
     }
 
     return data
   } catch (error) {
-    console.error('[SerieAPI] Failed to fetch series credits:', error)
-    throw new Error('[SerieAPI] Failed to fetch series credits')
+    console.error('[SeriesAPI] Failed to fetch series credits:', error)
+    throw new Error('[SeriesAPI] Failed to fetch series credits')
   }
 }
 
-export const getSimilarSerie = async (
+export const getSimilarSeries = async (
   id: string | undefined,
   page = 1
-): Promise<TMDBPaginatedResponse<Serie>> => {
+): Promise<TMDBPaginatedResponse<Series>> => {
   try {
-    if (!id) throw new Error('[SerieAPI] No series id was provided.')
+    if (!id) throw new Error('[SeriesAPI] No series id was provided.')
 
-    const { data } = await api.get(SERIESS_ENDPOINTS.SIMILAR(id), {
+    const { data } = await api.get(SERIES_ENDPOINTS.SIMILAR(id), {
       params: { page },
     })
 
     if (!data || !Array.isArray(data.results)) {
       throw new Error(
-        '[SerieAPI] Unexpected API response structure for similar series.'
+        '[SeriesAPI] Unexpected API response structure for similar series.'
       )
     }
 
     return data
   } catch (error) {
-    console.error('[SerieAPI] Failed to fetch similar series:', error)
-    throw new Error('[SerieAPI] Failed to fetch similar series')
+    console.error('[SeriesAPI] Failed to fetch similar series:', error)
+    throw new Error('[SeriesAPI] Failed to fetch similar series')
   }
 }
 
-export type { SerieListFilter } from '../types/series'
+export type { SeriesListFilter } from '../types/series'

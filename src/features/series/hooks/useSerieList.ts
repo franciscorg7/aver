@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import {
-  getSerieByFilter,
-  searchSerie,
-  type SerieListFilter,
+  getSeriesByFilter,
+  searchSeries,
+  type SeriesListFilter,
 } from '../api/series.api'
 
 type UseSeriesListProps = {
   query?: string
-  filter?: SerieListFilter
+  filter?: SeriesListFilter
   page?: number
 }
 
@@ -22,8 +22,8 @@ export const useSeriesList = ({
     queryKey: ['series', filter, page, normalizedQuery],
     queryFn: async () => {
       return normalizedQuery
-        ? searchSerie({ page, query: normalizedQuery })
-        : getSerieByFilter(filter, page)
+        ? searchSeries({ page, query: normalizedQuery })
+        : getSeriesByFilter(filter, page)
     },
   })
 }

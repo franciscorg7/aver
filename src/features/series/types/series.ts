@@ -1,4 +1,4 @@
-export interface Serie {
+export interface Series {
   adult: boolean
   backdrop_path: string | null
   first_air_date: string
@@ -15,7 +15,7 @@ export interface Serie {
   vote_count: number
 }
 
-export type SerieListFilter =
+export type SeriesListFilter =
   | 'AIRING_TODAY'
   | 'ON_THE_AIR'
   | 'POPULAR'

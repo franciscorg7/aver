@@ -33,8 +33,7 @@ export const MovieListView = ({
   }, [totalPages, setTotalPages])
 
   const noResults = !movies || movies.length === 0 || hasError
-
-  if (isLoading) return <ListLoadingScreen label="movies" />
+  if (isLoading) return <ListLoadingScreen />
 
   return (
     <>
