@@ -1,7 +1,7 @@
-import type { MovieCastMember } from '../../types/movie-details'
+import type { CastMember } from '@/types/media-details'
 
 type CastCardProps = {
-  member: MovieCastMember
+  member: CastMember
 }
 
 const getProfileUrl = (path: string | null) =>

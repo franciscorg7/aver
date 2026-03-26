@@ -1,4 +1,4 @@
-import type { MovieCastMember } from '../../types/movie-details'
+import type { MovieCastMember } from '../../features/movies/types/movie-details'
 import { CastCard } from './CastCard'
 
 type CastRowProps = {

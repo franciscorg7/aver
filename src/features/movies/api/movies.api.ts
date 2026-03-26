@@ -1,10 +1,6 @@
 import { api } from '../../../api/tmdb'
-import type {
-  MovieCastMember,
-  MovieDetailsWithExtras,
-  SimilarMovie,
-} from '../types/movie-details'
-import type { Movie } from '../types/movies'
+import type { MovieDetailsWithExtras } from '../types/movie-details'
+import { buildCast, buildSimilarMedia } from '@/lib/media-details'
 
 export const MOVIES_ENDPOINTS = {
   POPULAR: '/movie/popular',
@@ -17,42 +13,6 @@ export const MOVIES_ENDPOINTS = {
   CREDITS: (id: number | string) => `/movie/${id}/credits`,
   SIMILAR: (id: number | string) => `/movie/${id}/similar`,
 } as const
-
-/**
- * Builds a list of cast members for a movie, limiting to the first 10 members.
- *
- * @param cast - the list of movie cast members
- * @returns the first 10 cast members or an empty array if none is available
- */
-const buildMovieCast = (
-  cast: MovieCastMember[] | undefined
-): MovieCastMember[] => {
-  return Array.isArray(cast)
-    ? cast.slice(0, 10).map((member: MovieCastMember) => ({
-        id: member.id,
-        name: member.name,
-        character: member.character,
-        profile_path: member.profile_path,
-      }))
-    : []
-}
-
-/**
- * Builds a list of similar movies, limiting to the first 8 results.
- *
- * @param movies - the similar movies
- * @returns the first 8 similar movies or an empty array if none is available
- */
-const buildSimilarMovies = (movies: Movie[] | undefined): SimilarMovie[] => {
-  return Array.isArray(movies)
-    ? movies.slice(0, 8).map((movie: Movie) => ({
-        id: movie.id,
-        title: movie.title,
-        poster_path: movie.poster_path,
-        release_date: movie.release_date,
-      }))
-    : []
-}
 
 export const getMovieDetails = async (id: string | undefined) => {
   try {
@@ -74,8 +34,8 @@ export const getMovieDetails = async (id: string | undefined) => {
         '[MoviesAPI] Unexpected API response structure for movie details.'
       )
 
-    const cast = buildMovieCast(credits?.cast)
-    const similarMovies = buildSimilarMovies(similar?.results)
+    const cast = buildCast(credits?.cast)
+    const similarMovies = buildSimilarMedia(similar?.results)
 
     return {
       ...details,

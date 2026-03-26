@@ -1,7 +1,4 @@
-export interface Genre {
-  id: number
-  name: string
-}
+import type { CastMember, Genre, SimilarMedia } from '@/types/media-details'
 
 export interface ProductionCompany {
   id: number
@@ -36,20 +33,6 @@ export type MovieStatus =
   | 'Released'
   | 'Canceled'
 
-export interface MovieCastMember {
-  id: number
-  name: string
-  character: string
-  profile_path: string | null
-}
-
-export interface SimilarMovie {
-  id: number
-  title: string
-  poster_path: string | null
-  release_date: string
-}
-
 export interface MovieDetails {
   adult: boolean
   backdrop_path: string | null
@@ -80,6 +63,6 @@ export interface MovieDetails {
 }
 
 export interface MovieDetailsWithExtras extends MovieDetails {
-  cast: MovieCastMember[]
-  similarMovies: SimilarMovie[]
+  cast: CastMember[]
+  similarMovies: SimilarMedia[]
 }

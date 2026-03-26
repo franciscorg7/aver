@@ -1,9 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import {
-  getSeriesByFilter,
-  searchSeries,
-  type SeriesListFilter,
-} from '../api/series.api'
+import { getSeriesByFilter, searchSeries } from '../api/series.api'
+import type { SeriesListFilter } from '../types/series'
 
 type UseSeriesListProps = {
   query?: string

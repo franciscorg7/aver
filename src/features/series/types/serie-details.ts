@@ -1,7 +1,4 @@
-export interface Genre {
-  id: number
-  name: string
-}
+import type { CastMember, Genre, SimilarMedia } from '@/types/media-details'
 
 export interface CreatedBy {
   id: number
@@ -104,4 +101,9 @@ export interface SeriesDetails {
   type: string
   vote_average: number
   vote_count: number
+}
+
+export interface SeriesDetailsWithExtras extends SeriesDetails {
+  cast: CastMember[]
+  similarSeries: SimilarMedia[]
 }

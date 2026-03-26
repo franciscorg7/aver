@@ -1,9 +1,9 @@
-import type { MovieCastMember } from '../../types/movie-details'
-import { CastRow } from './CastRow'
+import type { CastMember } from '@/types/media-details'
 import { CastHeader } from './CastHeader'
+import { CastRow } from './CastRow'
 
 type CastProps = {
-  cast?: MovieCastMember[]
+  cast?: CastMember[]
 }
 
 export const Cast = ({ cast = [] }: CastProps) => {

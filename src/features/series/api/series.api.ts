@@ -1,6 +1,7 @@
 import { api } from '../../../api/tmdb'
-import type { SeriesDetails } from '../types/serie-details'
+import type { SeriesDetailsWithExtras } from '../types/serie-details'
 import type { Series, SeriesListFilter } from '../types/series'
+import { buildCast, buildSimilarMedia } from '@/lib/media-details'
 
 export const SERIES_ENDPOINTS = {
   AIRING_TODAY: '/tv/airing_today',
@@ -73,19 +74,31 @@ export const searchSeries = async ({
 
 export const getSeriesDetails = async (
   id: string | undefined
-): Promise<SeriesDetails> => {
+): Promise<SeriesDetailsWithExtras> => {
   try {
     if (!id) throw new Error('[SeriesAPI] No series id was provided.')
 
-    const { data } = await api.get(SERIES_ENDPOINTS.DETAILS(id))
+    const [detailsResponse, creditsResponse, similarResponse] =
+      await Promise.all([
+        api.get(SERIES_ENDPOINTS.DETAILS(id)),
+        api.get(SERIES_ENDPOINTS.CREDITS(id)),
+        api.get(SERIES_ENDPOINTS.SIMILAR(id)),
+      ])
 
-    if (!data) {
+    const details = detailsResponse.data
+    const credits = creditsResponse.data
+    const similar = similarResponse.data
+
+    if (!details) {
       throw new Error(
         '[SeriesAPI] Unexpected API response structure for series details.'
       )
     }
 
-    return data
+    const cast = buildCast(credits?.cast)
+    const similarSeries = buildSimilarMedia(similar?.results)
+
+    return { ...details, cast, similarSeries } satisfies SeriesDetailsWithExtras
   } catch (error) {
     console.error('[SeriesAPI] Failed to fetch series details:', error)
     throw new Error('[SeriesAPI] Failed to fetch series details')
@@ -134,5 +147,3 @@ export const getSimilarSeries = async (
     throw new Error('[SeriesAPI] Failed to fetch similar series')
   }
 }
-
-export type { SeriesListFilter } from '../types/series'
